@@ -5,89 +5,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inquérito aos Pais 2026</title>
     <style>
-        :root { 
-            --valsassina-blue: #002137; 
-            --bg-light: #f4f7fa; 
-            --card-bg: #ffffff; 
-            --text-main: #1e293b; 
-        }
-        body { 
-            font-family: "Segoe UI", Arial, sans-serif; 
-            background: var(--bg-light); 
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            height: 100vh; 
-            box-sizing: border-box;
-        }
+        /* (3) RECUPERADO O DIMENSIONAMENTO E PARÂMETROS ORIGINAIS DE LARGURA */
+        :root { --primary: #002137; --secondary: #27ae60; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); padding: 20px; }
+        
         .container { 
-            max-width: 500px; 
-            width: 100%; 
-            background: var(--card-bg); 
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,33,55,0.05); 
-            border: 1px solid #e2e8f0; 
-            text-align: center;
-            box-sizing: border-box;
-        }
-        .logo { max-width: 180px; height: auto; margin-bottom: 25px; }
-        h1 { color: var(--valsassina-blue); font-size: 1.4em; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
-        p { font-size: 0.95em; line-height: 1.5; color: #64748b; margin-bottom: 30px; }
-        
-        .btn-clique { 
-            display: inline-block;
-            width: 100%; 
-            background: var(--valsassina-blue); 
-            color: white; 
-            padding: 18px; 
-            border: none; 
+            max-width: 800px; /* Largura exata de 1 página do teu original */
+            margin: 0 auto; 
+            background: white; 
+            padding: 30px; 
             border-radius: 12px; 
-            font-size: 1.1em; 
-            font-weight: 800; 
-            text-decoration: none; 
-            text-transform: uppercase; 
-            transition: background 0.2s;
-            box-sizing: border-box;
-            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            box-sizing: border-box; 
         }
-        .btn-clique:hover { background: #003356; }
         
-        /* Mensagem de redirecionamento automático */
-        .loading-text { font-weight: 600; color: var(--valsassina-blue); margin-bottom: 15px; }
+        h1 { color: var(--primary); text-align: center; font-size: 1.5em; text-transform: uppercase; font-weight: 800; }
+        .logo-container { text-align: center; margin-bottom: 20px; }
+        
+        /* (1) AJUSTADO O DIMENSIONAMENTO DO LOGÓTIPO IGUAL AO ORIGINAL */
+        .logo { 
+            max-width: 200px; 
+            height: auto; 
+            image-rendering: -webkit-optimize-contrast; 
+        }
+        
+        /* (2) CAIXA DE INTRODUÇÃO COM A INSTRUÇÃO TOTAL */
+        .intro { 
+            background: #e8f4fd; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 25px; 
+            border-left: 5px solid var(--primary); 
+            font-size: 0.9em; 
+            line-height: 1.6;
+        }
+        
+        .section-title { background: var(--primary); color: white; padding: 8px 15px; margin-top: 25px; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.9em; }
+        .row { display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
+        .row div { flex: 1; min-width: 150px; }
+        label.field-label { display: block; font-size: 0.75em; color: var(--primary); margin-bottom: 6px; font-weight: 800; text-transform: uppercase; }
+        
+        /* inputs, selects e textareas com o vosso design */
+        select, input[type="text"], textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 1em; }
+        select { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23002137%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; }
+        select:disabled { background: #cbd5e1; cursor: not-allowed; }
+        textarea { min-height: 80px; resize: vertical; line-height: 1.5; }
+        
+        /* ESTILIZAÇÃO DOS CARDS DAS PERGUNTAS */
+        .pergunta-card { background: #ffffff; padding: 20px; border-radius: 12px; margin: 15px 0; border: 1px solid #eee; }
+        .pergunta-texto { display: block; margin-bottom: 20px; font-size: 1.05em; color: var(--primary); font-weight: 600; }
+        
+        /* (4) GRELHA DE 5 COLUNAS PARA AS LEGENDAS DA ESCALA */
+        .options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .option-item input { display: none; }
+        .option-item label { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        
+        .radio-button { width: 100%; height: 45px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 8px; font-weight: 800; color: #94a3b8; transition: 0.2s; box-sizing: border-box; }
+        .label-text { font-size: 0.65em; text-transform: uppercase; font-weight: 700; color: #94a3b8; text-align: center; }
+        .option-item input:checked + label .radio-button { border-color: var(--primary); color: white; background: var(--primary); }
+        
+        button { width: 100%; background: var(--primary); color: white; padding: 15px; border: none; border-radius: 6px; font-size: 1.1em; cursor: pointer; margin-top: 30px; text-transform: uppercase; font-weight: bold; }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; }
+        #successArea { display: none; text-align: center; padding: 60px 20px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="https://lh3.googleusercontent.com/d/1jVRU6cfYAtBA2ITjsK46sJwbKDzGd9gW" class="logo" alt="Valsassina">
-    
-    <h1>Inquérito aos Pais 2026</h1>
-    
-    <div id="redirectStatus" class="loading-text">A redirecionar para o formulário seguro...</div>
-    <p>Se não for redirecionado automaticamente dentro de 3 segundos, por favor clique no botão abaixo.</p>
-    
-    <a href="https://script.google.com/macros/s/AKfycbxGyEHz0_Ji8tIyEMQDBczsFlmAijeWs754jT2uM7cX_Dm666lAhsK9dDwu_lvwMGcfZQ/exec?authuser=0" id="manualLink" class="btn-clique">
-        Clique Aqui para Responder
-    </a>
+<div class="container" id="mainContainer">
+    <div id="formContent">
+        <div class="logo-container">
+            <img src="https://lh3.googleusercontent.com/d/1jVRU6cfYAtBA2ITjsK46sJwbKDzGd9gW" class="logo" alt="Logo">
+        </div>
+        <h1>Inquérito aos Pais (2026)</h1>
+        
+        <div class="intro">
+            Estamos interessados em conhecer a sua opinião sobre o Colégio. Para isso, avalie sinceramente e de maneira anónima, (não escreva o seu nome em nenhum lugar) cada uma das seguintes afirmações de 1 a 5, tendo em conta que: (1 = Muito Pouco; 2 = Pouco; 3 = Normal/Satisfatório; 4 = Bastante; 5 = Muito).
+        </div>
+
+        <form id="surveyForm">
+            <div class="row">
+                <div><label class="field-label">Ano:</label><input type="text" name="ano" value="2025/2026" readonly style="background: #f4f7f6;"></div>
+                <div>
+                    <label class="field-label">Ciclo:</label>
+                    <select name="ciclo" id="cicloSelect" required onchange="updateTurmas()">
+                        <option value="">A carregar ciclos...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="field-label">Turma:</label>
+                    <select name="turma" id="turmaSelect" required disabled>
+                        <option value="">A aguardar ciclo...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-title">Avaliação</div>
+            <div id="perguntasContainer"></div>
+
+            <div class="section-title">Assinale três aspetos que mais valoriza no Colégio</div>
+            <textarea name="v1" placeholder="1." style="margin-top:10px; margin-bottom:10px;"></textarea>
+            <textarea name="v2" placeholder="2." style="margin-bottom:10px;"></textarea>
+            <textarea name="v3" placeholder="3."></textarea>
+
+            <div class="section-title">Assinale três aspetos que deveriam ser melhorados</div>
+            <textarea name="m1" placeholder="1." style="margin-top:10px; margin-bottom:10px;"></textarea>
+            <textarea name="m2" placeholder="2." style="margin-bottom:10px;"></textarea>
+            <textarea name="m3" placeholder="3."></textarea>
+
+            <button type="submit" id="submitBtn" disabled>A carregar formulário...</button>
+        </form>
+    </div>
+
+    <div id="successArea">
+        <div style="color:var(--primary); font-size:1.4em; font-weight:700;">Resposta Registada!</div>
+        <p>Obrigado pela sua colaboração.</p>
+        <button onclick="location.reload()" style="background:none; border:2px solid #e2e8f0; color:var(--primary); padding:12px 25px; border-radius:10px; cursor:pointer; margin-top:30px; font-weight:700; width:auto;">Nova Resposta</button>
+    </div>
 </div>
 
 <script>
-    // URL do teu Web App original da Google (que gera o HTML com as listas)
-    const targetURL = "https://script.google.com/macros/s/AKfycbxGyEHz0_Ji8tIyEMQDBczsFlmAijeWs754jT2uM7cX_Dm666lAhsK9dDwu_lvwMGcfZQ/exec?authuser=0";
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxGyEHz0_Ji8tIyEMQDBczsFlmAijeWs754jT2uM7cX_Dm666lAhsK9dDwu_lvwMGcfZQ/exec';
+    let distData = [];
 
-    // EXECUÇÃO PROGRAMÁTICA: Força o navegador a saltar para o link limpando a sessão
-    try {
-        // Substitui o histórico da página corrente para evitar loops de retrocesso do utilizador
-        window.location.replace(targetURL);
-    } catch (e) {
-        // Caso o navegador bloqueie o comportamento automático, atualiza o texto e deixa o botão disponível
-        document.getElementById("redirectStatus").innerText = "Por favor, utilize o botão abaixo para aceder:";
-        console.error("Redirecionamento automático intercetado:", e);
+    const cicloSelect = document.getElementById("cicloSelect");
+    const turmaSelect = document.getElementById("turmaSelect");
+    const btn = document.getElementById('submitBtn');
+
+    window.addEventListener('DOMContentLoaded', () => {
+        fetch(scriptURL)
+            .then(res => res.json())
+            .then(data => {
+                distData = data;
+                cicloSelect.innerHTML = '<option value="">Selecione o Ciclo...</option>';
+                const ciclosUnicos = [...new Set(distData.filter(i => i.ciclo).map(item => item.ciclo))];
+                ciclosUnicos.forEach(c => {
+                    let opt = document.createElement("option"); opt.value = c; opt.text = c; cicloSelect.add(opt);
+                });
+                btn.disabled = false;
+                btn.innerText = "Submeter Respostas";
+            })
+            .catch(err => {
+                console.error(err);
+                cicloSelect.innerHTML = '<option value="">Erro ao carregar estrutura.</option>';
+            });
+    });
+
+    function updateTurmas() {
+        const cicloSel = cicloSelect.value;
+        turmaSelect.innerHTML = '<option value="">Selecione a Turma...</option>';
+        if(cicloSel) {
+            turmaSelect.disabled = false;
+            const turmasFiltradas = distData.filter(item => item.ciclo === cicloSel);
+            turmasFiltradas.forEach(t => {
+                let opt = document.createElement("option"); opt.value = t.turma; opt.text = t.turma; turmaSelect.add(opt);
+            });
+        } else { turmaSelect.disabled = true; }
     }
+
+    const perguntas = [
+        "Identifico-me com o sistema de valores do Projeto Educativo do Colégio",
+        "Estou satisfeito com o trabalho da Educadora",
+        "A comunicação com a Educadora é fácil e fluida",
+        "A comunicação com os Directores e Coordenadora é fácil e fluida",
+        "Existe um bom clima de harmonia e convivência entre as crianças",
+        "As actividades extra-escolares complementam a formação das crianças",
+        "As ementas que o refeitório oferece são equilibradas e saudáveis",
+        "O custo do Colégio corresponds à qualidade da sua oferta educativa",
+        "Em geral, a educação que compete ao Colégio corresponde às minhas expectativas"
+    ];
+    
+    // (4) RECUPERADAS AS LEGENDAS EXATAS PARA CADA OPÇÃO DA ESCALA
+    const legendas = ["Muito Pouco", "Pouco", "Normal/Satis.", "Bastante", "Muito"];
+    const container = document.getElementById("perguntasContainer");
+    
+    perguntas.forEach((texto, i) => {
+        let opts = "";
+        [1,2,3,4,5].forEach((v, idx) => {
+            opts += `<div class="option-item"><input type="radio" id="p${i+1}_${v}" name="p${i+1}" value="${v}" required><label for="p${i+1}_${v}"><div class="radio-button">${v}</div><div class="label-text">${legendas[idx]}</div></label></div>`;
+        });
+        container.innerHTML += `
+            <div class="pergunta-card">
+                <span class="pergunta-texto">${i+1}. ${texto}</span>
+                <div class="options-grid">${opts}</div>
+            </div>`;
+    });
+
+    form = document.getElementById('surveyForm');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true; btn.innerText = "A enviar...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors'})
+            .then(() => {
+                document.getElementById("formContent").style.display = "none";
+                document.getElementById("successArea").style.display = "block";
+                window.scrollTo(0,0);
+            })
+            .catch(() => alert('Erro de ligação.'))
+            .finally(() => {
+                btn.disabled = false; btn.innerText = "Submeter Respostas";
+            });
+    });
 </script>
 </body>
 </html>
