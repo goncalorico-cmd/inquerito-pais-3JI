@@ -22,18 +22,21 @@
         .logo-container { text-align: center; margin-bottom: 20px; }
         
         .logo { 
-            max-width: 85px; 
+            max-width: 110px; 
             height: auto; 
             margin-bottom: 20px; 
             display: block; 
             margin-left: auto; 
             margin-right: auto; 
     
-            /* Força a nitidez máxima em ecrãs normais e Retina */
+            /* Combinação de renderização nativa para traços limpos */
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
-            transform: translateZ(0); /* Ativa aceleração por hardware para limpar o blur */
-            filter: contrast(1.05);  /* Realça ligeiramente os traços do logótipo */
+            image-rendering: pixelated;
+    
+            /* Evita que o navegador recalcule as arestas com desfoque */
+            transform: translateZ(0); 
+            backface-visibility: hidden;
         }
         
         .intro { 
