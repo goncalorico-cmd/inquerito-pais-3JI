@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inquérito aos Pais 2026</title>
     <style>
+        /* DEFINIÇÃO DE VARIÁVEIS DE CORES (Identidade Visual) */
         :root { 
             --valsassina-blue: #002137; 
             --bg-light: #f4f7fa; 
             --card-bg: #ffffff; 
             --text-main: #1e293b; 
-            --text-dim: #64748b; 
         }
+        
+        /* ESTILIZAÇÃO DA PÁGINA (Centramento Absoluto) */
         body { 
             font-family: "Segoe UI", Arial, sans-serif; 
             background: var(--bg-light); 
@@ -20,138 +22,64 @@
             padding: 20px; 
             display: flex; 
             justify-content: center; 
+            align-items: center;
+            height: 100vh; /* Ocupa 100% da altura do ecrã */
+            box-sizing: border-box;
         }
+        
+        /* CARTÃO DE ENQUADRAMENTO */
         .container { 
-            max-width: 800px; 
+            max-width: 500px; 
             width: 100%; 
             background: var(--card-bg); 
             padding: 40px; 
             border-radius: 20px; 
             box-shadow: 0 10px 30px rgba(0,33,55,0.05); 
             border: 1px solid #e2e8f0; 
+            text-align: center;
             box-sizing: border-box;
         }
-        .header { text-align: center; margin-bottom: 40px; }
-        .logo { max-width: 200px; height: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; }
-        h1 { color: var(--valsassina-blue); font-size: 1.5em; text-transform: uppercase; font-weight: 800; text-align: center; margin: 0; }
         
-        .row { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
-        .row div { flex: 1; min-width: 150px; }
-        label.field-label { display: block; font-size: 0.75em; color: var(--valsassina-blue); margin-bottom: 6px; font-weight: 800; text-transform: uppercase; }
+        .logo { max-width: 180px; height: auto; margin-bottom: 25px; }
+        h1 { color: var(--valsassina-blue); font-size: 1.4em; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
+        p { font-size: 0.95em; line-height: 1.5; color: #64748b; margin-bottom: 30px; }
         
-        input[type="text"] { 
+        /* ESTILO DO BOTÃO DE REDIRECIONAMENTO */
+        .btn-clique { 
+            display: inline-block;
             width: 100%; 
-            background: #fdfdfd; 
-            border: 1px solid #cbd5e1; 
-            border-radius: 10px; 
-            padding: 12px; 
-            transition: 0.3s; 
-            box-sizing: border-box; 
-            font-family: inherit; 
-            font-size: 0.95em; 
-            color: var(--text-main); 
+            background: var(--valsassina-blue); 
+            color: white; 
+            padding: 18px; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 1.1em; 
+            font-weight: 800; 
+            text-decoration: none; 
+            text-transform: uppercase; 
+            transition: background 0.2s;
+            box-sizing: border-box;
+            cursor: pointer;
         }
-        input:focus { border-color: var(--valsassina-blue); outline: none; box-shadow: 0 0 0 4px rgba(0,33,55,0.05); }
-        
-        .intro-text { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--valsassina-blue); border-radius: 8px; padding: 25px; margin-bottom: 35px; font-size: 0.95em; line-height: 1.6; }
-        .pergunta-card { background: #ffffff; padding: 25px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #f1f5f9; }
-        .pergunta-texto { display: block; margin-bottom: 25px; font-size: 1.05em; color: var(--valsassina-blue); font-weight: 600; }
-        
-        .options-grid { display: flex; justify-content: space-between; max-width: 500px; margin-top: 10px; }
-        .options-grid label { cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 0.9em; }
-        .options-grid input { margin-bottom: 5px; cursor: pointer; }
-
-        .section-title { background: var(--valsassina-blue); color: white; padding: 10px 15px; margin-top: 35px; border-radius: 8px; font-weight: 800; text-transform: uppercase; font-size: 0.9em; }
-        
-        button#submitBtn { width: 100%; background: var(--valsassina-blue); color: white; padding: 20px; border: none; border-radius: 12px; font-size: 1.1em; font-weight: 800; cursor: pointer; margin-top: 40px; text-transform: uppercase; }
-        button#submitBtn:disabled { background: #cbd5e1; cursor: not-allowed; }
+        .btn-clique:hover {
+            background: #003356; /* Efeito visual ao passar o rato */
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <img src="https://drive.google.com/uc?export=view&id=1jVRU6cfYAtBA2ITjsK46sJwbKDzGd9gW" class="logo" alt="Valsassina">
-        <h1>Inquérito aos Pais 2026</h1>
-    </div>
-
-    <div class="intro-text">Estamos interessados em conhecer a sua opinião sobre o Colégio. Para isso, avalie sinceramente e de maneira anónima, (não escreva o seu nome em nenhum lugar) cada uma das seguintes afirmações de 1 a 5, tendo em conta que: (1 = Muito Pouco; 2 = Pouco; 3 = Normal/Satisfatório; 4 = Bastante; 5 = Muito).</div>
-
-    <form id="gitSurveyForm">
-        <div class="row">
-            <div><label class="field-label">Ano:</label><input type="text" name="ano" required placeholder="Ex: 2025/2026"></div>
-            <div><label class="field-label">Turma:</label><input type="text" name="turma" required placeholder="Ex: A"></div>
-            <div><label class="field-label">Ciclo:</label><input type="text" name="ciclo" required placeholder="Ex: 1º Ciclo"></div>
-        </div>
-
-        <div id="perguntasContainer"></div>
-
-        <div class="section-title">Assinale três aspetos que mais valoriza no Colégio</div>
-        <input type="text" name="v1" style="margin-top:12px" placeholder="1.">
-        <input type="text" name="v2" style="margin-top:12px" placeholder="2.">
-        <input type="text" name="v3" style="margin-top:12px" placeholder="3.">
-
-        <div class="section-title">Assinale três aspetos que deveriam ser melhorados</div>
-        <input type="text" name="m1" style="margin-top:12px" placeholder="1.">
-        <input type="text" name="m2" style="margin-top:12px" placeholder="2.">
-        <input type="text" name="m3" style="margin-top:12px" placeholder="3.">
-
-        <button type="submit" id="submitBtn">Finalizar Submissão</button>
-    </form>
+    <!-- Imagem do Logótipo do Colégio -->
+    <img src="https://drive.google.com/uc?export=view&id=1jVRU6cfYAtBA2ITjsK46sJwbKDzGd9gW" class="logo" alt="Valsassina">
+    
+    <h1>Inquérito aos Pais 2026</h1>
+    <p>Para iniciar o preenchimento do inquérito de forma segura e sem erros de conta, por favor clique no botão abaixo.</p>
+    
+    <!-- LINK DE REDIRECIONAMENTO COM PARÂMETRO LIMPO (?authuser=0) -->
+    <a href="https://script.google.com/a/macros/cvalsassina.pt/s/AKfycbyU7SYlzxBWzfUsOvMjKF3e0vf6DWIQurrVqlPmu9YpTahWqqNUKQd_OF3_MZkqFQKX2g/exec?authuser=0" class="btn-clique">
+        Clique Aqui para Responder
+    </a>
 </div>
 
-<script>
-    // A REFERÊNCIA CRÍTICA: O URL do teu Google Apps Script que processa os dados
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxGyEHz0_Ji8tIyEMQDBczsFlmAijeWs754jT2uM7cX_Dm666lAhsK9dDwu_lvwMGcfZQ/exec';
-    
-    const perguntas = [
-        "Identifico-me com o sistema de valores do Projeto Educativo do Colégio",
-        "Estou satisfeito com o trabalho da Educadora",
-        "A comunicação com a Educadora é fácil e fluida",
-        "A comunicação com os Directores e Coordenadora é fácil e fluida",
-        "Existe um bom clima de harmonia e convivência entre as crianças",
-        "As actividades extra-escolares complementam a formação das crianças",
-        "As ementas que o refeitório oferece são equilibradas e saudáveis",
-        "O custo do Colégio corresponde à qualidade da sua oferta educativa",
-        "Em geral, a educação que compete ao Colégio corresponde às minhas expectativas"
-    ];
-
-    const container = document.getElementById('perguntasContainer');
-    perguntas.forEach((texto, i) => {
-        const n = i + 1;
-        container.innerHTML += `
-            <div class="pergunta-card">
-                <span class="pergunta-texto">${n}. ${texto}</span>
-                <div class="options-grid">
-                    ${[1,2,3,4,5].map(v => `<label><input type="radio" name="p${n}" value="${v}" required> ${v}</label>`).join('')}
-                </div>
-            </div>`;
-    });
-
-    const form = document.getElementById('gitSurveyForm');
-    const btn = document.getElementById('submitBtn');
-
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        btn.disabled = true;
-        btn.innerText = "A GUARDAR...";
-
-        // Envia os dados diretamente para o Google Apps Script
-        fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors'})
-            .then(() => {
-                alert('Inquérito enviado com sucesso! Obrigado pela sua colaboração.');
-                form.reset();
-                window.scrollTo(0,0);
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao enviar as respostas. Por favor, tente novamente.');
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerText = "Finalizar Submissão";
-            });
-    });
-</script>
 </body>
 </html>
