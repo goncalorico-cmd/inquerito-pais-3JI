@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inquérito aos Pais 2026</title>
     <style>
-        /* (3) RECUPERADO O DIMENSIONAMENTO E PARÂMETROS ORIGINAIS DE LARGURA */
         :root { --primary: #002137; --secondary: #27ae60; --bg: #f4f7f6; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); padding: 20px; }
         
         .container { 
-            max-width: 800px; /* Largura exata de 1 página do teu original */
+            max-width: 800px; 
             margin: 0 auto; 
             background: white; 
             padding: 30px; 
@@ -22,14 +21,12 @@
         h1 { color: var(--primary); text-align: center; font-size: 1.5em; text-transform: uppercase; font-weight: 800; }
         .logo-container { text-align: center; margin-bottom: 20px; }
         
-        /* (1) AJUSTADO O DIMENSIONAMENTO DO LOGÓTIPO IGUAL AO ORIGINAL */
         .logo { 
             max-width: 200px; 
             height: auto; 
             image-rendering: -webkit-optimize-contrast; 
         }
         
-        /* (2) CAIXA DE INTRODUÇÃO COM A INSTRUÇÃO TOTAL */
         .intro { 
             background: #e8f4fd; 
             padding: 15px; 
@@ -45,17 +42,14 @@
         .row div { flex: 1; min-width: 150px; }
         label.field-label { display: block; font-size: 0.75em; color: var(--primary); margin-bottom: 6px; font-weight: 800; text-transform: uppercase; }
         
-        /* inputs, selects e textareas com o vosso design */
         select, input[type="text"], textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 1em; }
         select { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23002137%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; }
         select:disabled { background: #cbd5e1; cursor: not-allowed; }
         textarea { min-height: 80px; resize: vertical; line-height: 1.5; }
         
-        /* ESTILIZAÇÃO DOS CARDS DAS PERGUNTAS */
         .pergunta-card { background: #ffffff; padding: 20px; border-radius: 12px; margin: 15px 0; border: 1px solid #eee; }
         .pergunta-texto { display: block; margin-bottom: 20px; font-size: 1.05em; color: var(--primary); font-weight: 600; }
         
-        /* (4) GRELHA DE 5 COLUNAS PARA AS LEGENDAS DA ESCALA */
         .options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
         .option-item input { display: none; }
         .option-item label { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
@@ -124,6 +118,7 @@
 </div>
 
 <script>
+    // NOVO URL DO TEU APPS SCRIPT ATUALIZADO COM SUCESSO:
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxv7GtpRi93aERl5P-l1eEMQUUbYc7tDGXDFgwlmlYfHBb_DQtozdZaZBiU93RLh3Qtcw/exec';
     let distData = [];
 
@@ -132,7 +127,8 @@
     const btn = document.getElementById('submitBtn');
 
     window.addEventListener('DOMContentLoaded', () => {
-        fetch(scriptURL)
+        // Envia o parâmetro ?source=github para o doGet saber como responder
+        fetch(`${scriptURL}?source=github`)
             .then(res => res.json())
             .then(data => {
                 distData = data;
@@ -170,11 +166,10 @@
         "Existe um bom clima de harmonia e convivência entre as crianças",
         "As actividades extra-escolares complementam a formação das crianças",
         "As ementas que o refeitório oferece são equilibradas e saudáveis",
-        "O custo do Colégio corresponds à qualidade da sua oferta educativa",
+        "O custo do Colégio corresponde à qualidade da sua oferta educativa",
         "Em geral, a educação que compete ao Colégio corresponde às minhas expectativas"
     ];
     
-    // (4) RECUPERADAS AS LEGENDAS EXATAS PARA CADA OPÇÃO DA ESCALA
     const legendas = ["Muito Pouco", "Pouco", "Normal/Satis.", "Bastante", "Muito"];
     const container = document.getElementById("perguntasContainer");
     
@@ -190,7 +185,7 @@
             </div>`;
     });
 
-    form = document.getElementById('surveyForm');
+    const form = document.getElementById('surveyForm');
     form.addEventListener('submit', e => {
         e.preventDefault();
         btn.disabled = true; btn.innerText = "A enviar...";
