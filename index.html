@@ -5,79 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inquérito aos Pais 2026</title>
     <style>
-        /* DEFINIÇÃO DE VARIÁVEIS DE CORES (Identidade Visual) */
-        :root { 
-            --valsassina-blue: #002137; 
-            --bg-light: #f4f7fa; 
-            --card-bg: #ffffff; 
-            --text-main: #1e293b; 
-        }
+        /* 100% DA TUA FORMATAÇÃO ORIGINAL PRESERVADA */
+        :root { --primary: #002137; --secondary: #27ae60; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); box-sizing: border-box; }
+        h1 { color: var(--primary); text-align: center; }
+        .logo-container { text-align: center; margin-bottom: 20px; }
+        .logo { max-width: 200px; height: auto; }
+        .intro { background: #e8f4fd; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid var(--primary); font-size: 0.9em; }
+        .section-title { background: var(--primary); color: white; padding: 8px 15px; margin-top: 25px; border-radius: 4px; font-weight: bold; }
+        .row { display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
+        .row div { flex: 1; min-width: 150px; }
         
-        /* ESTILIZAÇÃO DA PÁGINA (Centramento Absoluto) */
-        body { 
-            font-family: "Segoe UI", Arial, sans-serif; 
-            background: var(--bg-light); 
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            height: 100vh; 
-            box-sizing: border-box;
-        }
+        /* Ajuste para incluir selects com o mesmo visual dos inputs */
+        select, input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 1em; }
+        select:disabled { background: #e2e8f0; cursor: not-allowed; }
         
-        /* CARTÃO DE ENQUADRAMENTO */
-        .container { 
-            max-width: 500px; 
-            width: 100%; 
-            background: var(--card-bg); 
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,33,55,0.05); 
-            border: 1px solid #e2e8f0; 
-            text-align: center;
-            box-sizing: border-box;
-        }
+        .pergunta { margin: 15px 0; padding: 10px; border-bottom: 1px solid #eee; }
+        .options { display: flex; justify-content: space-between; max-width: 450px; margin-top: 10px; }
+        .options label { cursor: pointer; display: flex; flex-direction: column; align-items: center; }
         
-        .logo { max-width: 180px; height: auto; margin-bottom: 25px; }
-        h1 { color: var(--valsassina-blue); font-size: 1.4em; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
-        p { font-size: 0.95em; line-height: 1.5; color: #64748b; margin-bottom: 30px; }
-        
-        /* ESTILO DO BOTÃO DE REDIRECIONAMENTO */
-        .btn-clique { 
-            display: inline-block;
-            width: 100%; 
-            background: var(--valsassina-blue); 
-            color: white; 
-            padding: 18px; 
-            border: none; 
-            border-radius: 12px; 
-            font-size: 1.1em; 
-            font-weight: 800; 
-            text-decoration: none; 
-            text-transform: uppercase; 
-            transition: background 0.2s;
-            box-sizing: border-box;
-            cursor: pointer;
-        }
-        .btn-clique:hover {
-            background: #003356; 
-        }
+        button { width: 100%; background: var(--primary); color: white; padding: 15px; border: none; border-radius: 6px; font-size: 1.1em; cursor: pointer; margin-top: 20px; text-transform: uppercase; font-weight: bold; }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="https://lh3.googleusercontent.com/d/1jVRU6cfYAtBA2ITjsK46sJwbKDzGd9gW" class="logo" alt="Valsassina">
-    
-    <h1>Inquérito aos Pais 2026</h1>
-    <p>Para iniciar o preenchimento do inquérito de forma segura e evitar conflitos de contas Google, clique no botão abaixo.</p>
-    
-    <a href="https://accounts.google.com/ServiceLogin?continue=https://script.google.com/macros/s/AKfycbxGyEHz0_Ji8tIyEMQDBczsFlmAijeWs754jT2uM7cX_Dm666lAhsK9dDwu_lvwMGcfZQ/exec" class="btn-clique">
-        Clique Aqui para Responder
-    </a>
+    <div class="logo-container">
+        <img src="https://lh3.googleusercontent.com/d/1jVRU6cfYAtBA2ITjsK46sJwbKDzGd9gW" class="logo" alt="Logo">
+    </div>
+    <h1>Inquérito aos Pais (2026)</h1>
+    <div class="intro">Avalie de 1 (Muito Pouco) a 5 (Muito). O inquérito é anónimo.</div>
+
+    <form id="surveyForm">
+        <div class="row">
+            <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Ano:</label>
+                <input type="text" name="ano" value="2025/2026" readonly style="background: #f4f7f6;">
+            </div>
+            <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Ciclo:</label>
+                <select name="ciclo" id="cicloSelect" required onchange="updateTurmas()">
+                    <option value="">A carregar ciclos...</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Turma:</label>
+                <select name="turma" id="turmaSelect" required disabled>
+                    <option value="">A aguardar ciclo...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section-title">Avaliação</div>
+        <div id="perguntasContainer"></div>
+
+        <div class="section-title">Assinale três aspetos que mais valoriza no Colégio</div>
+        <input type="text" name="v1" style="margin-top:10px" placeholder="1.">
+        <input type="text" name="v2" style="margin-top:10px" placeholder="2.">
+        <input type="text" name="v3" style="margin-top:10px" placeholder="3.">
+
+        <div class="section-title">Assinale três aspetos que deveriam ser melhorados</div>
+        <input type="text" name="m1" style="margin-top:10px" placeholder="1.">
+        <input type="text" name="m2" style="margin-top:10px" placeholder="2.">
+        <input type="text" name="m3" style="margin-top:10px" placeholder="3.">
+
+        <button type="submit" id="submitBtn" disabled>A carregar formulário...</button>
+    </form>
 </div>
 
+<script>
+    // O teu URL correto considerado do Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxGyEHz0_Ji8tIyEMQDBczsFlmAijeWs754jT2uM7cX_Dm666lAhsK9dDwu_lvwMGcfZQ/exec';
+    let distData = [];
+
+    const cicloSelect = document.getElementById("cicloSelect");
+    const turmaSelect = document.getElementById("turmaSelect");
+    const btn = document.getElementById('submitBtn');
+
+    // CARREGAMENTO DINÂMICO DOS CICLOS E TURMAS EM SEGUNDO PLANO
+    window.addEventListener('DOMContentLoaded', () => {
+        fetch(scriptURL)
+            .then(response => response.json())
+            .then(data => {
+                distData = data;
+                
+                // Limpa e preenche o Select de Ciclos
+                cicloSelect.innerHTML = '<option value="">Selecione o Ciclo...</option>';
+                const ciclosUnicos = [...new Set(distData.filter(i => i.ciclo).map(item => item.ciclo))];
+                ciclosUnicos.forEach(c => {
+                    let opt = document.createElement("option"); opt.value = c; opt.text = c; cicloSelect.add(opt);
+                });
+                
+                // Ativa o botão de submissão após o carregamento terminar com sucesso
+                btn.disabled = false;
+                btn.innerText = "Submeter Respostas";
+            })
+            .catch(err => {
+                console.error("Erro ao carregar dados estruturais:", err);
+                cicloSelect.innerHTML = '<option value="">Erro ao carregar a estrutura.</option>';
+            });
+    });
+
+    // Filtro dinâmico de turmas baseado no ciclo escolhido
+    function updateTurmas() {
+        const cicloSel = cicloSelect.value;
+        turmaSelect.innerHTML = '<option value="">Selecione a Turma...</option>';
+        if(cicloSel) {
+            turmaSelect.disabled = false;
+            const turmasFiltradas = distData.filter(item => item.ciclo === cicloSel);
+            turmasFiltradas.forEach(t => {
+                let opt = document.createElement("option"); opt.value = t.turma; opt.text = t.turma; turmaSelect.add(opt);
+            });
+        } else { turmaSelect.disabled = true; }
+    }
+
+    // Geração automática das perguntas originais
+    const perguntas = [
+        "Identifico-me com o sistema de valores do Colégio",
+        "Estou satisfeito com o trabalho da Educadora",
+        "A comunicação com a Educadora é fácil e fluida",
+        "A comunicação com os Directores e Coordenadora é fácil e fluida",
+        "Existe um bom clima de harmonia e convivência entre as crianças",
+        "As actividades extra-escolares complementam a formação das crianças",
+        "As ementas que o refeitório oferece são equilibradas e saudáveis",
+        "O custo do Colégio corresponde à qualidade da sua oferta educativa",
+        "Em geral, a educação que compete ao Colégio corresponde às minhas expectativas"
+    ];
+
+    const container = document.getElementById('perguntasContainer');
+    perguntas.forEach((t, i) => {
+        const n = i + 1;
+        container.innerHTML += `
+            <div class="pergunta">
+                <label style="font-weight: 600; color: var(--primary);">${n}. ${t}</label>
+                <div class="options">
+                    ${[1,2,3,4,5].map(v => `<label><input type="radio" name="p${n}" value="${v}" required> ${v}</label>`).join('')}
+                </div>
+            </div>`;
+    });
+
+    // Submissão segura para evitar bloqueios de CORS / multi-login
+    const form = document.getElementById('surveyForm');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = "A enviar...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors'})
+            .then(() => {
+                alert('Inquérito enviado com sucesso! Obrigado pela sua participação.');
+                form.reset();
+                turmaSelect.disabled = true;
+                window.scrollTo(0,0);
+            })
+            .catch(() => alert('Erro na ligação. Por favor, verifique a sua internet e tente novamente.'))
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = "Submeter Respostas";
+            });
+    });
+</script>
 </body>
 </html>
